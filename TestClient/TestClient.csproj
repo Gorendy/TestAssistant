@@ -63,8 +63,12 @@
             <DependentUpon>MainWindow.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
+        <Page Include="MsgDialog.xaml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="MsgDialog.xaml.cs">
+          <DependentUpon>MsgDialog.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Properties\AssemblyInfo.cs">
             <SubType>Code</SubType>
         </Compile>
@@ -82,9 +86,9 @@
         <None Include="App.config"/>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\testAssistant\testAssistant.csproj">
-        <Project>{3a91a0d1-92f6-4e75-8bd3-9e44258c01d4}</Project>
-        <Name>testAssistant</Name>
+      <ProjectReference Include="..\TesterHelper\TesterHelper.csproj">
+        <Project>{43b7768a-fea7-45c9-8608-449625d22b15}</Project>
+        <Name>TesterHelper</Name>
       </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>

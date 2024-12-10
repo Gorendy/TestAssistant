@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Windows;
-using testAssistant.config;
-using testAssistant.constant;
-using testAssistant.domain;
-using testAssistant.util;
+using System.Windows.Input;
+using TesterHelper.context;
+using TesterHelper.controller;
+using TesterHelper.domain.vo;
 
 namespace TestClient
 {
@@ -15,129 +15,87 @@ namespace TestClient
     /// </summary>
     public partial class MainWindow
     {
-        private string excuteProgram = null;
+        private readonly TesterController controller;
+        private readonly bool isRunnable = false;
         public MainWindow() {
             InitializeComponent();
             //this.WindowStartupLocation = WindowStartupLocation.CenterScreen;//在中间显示
             // 读取配置信息
-            InfoContext.init();
-            
+            try {
+                controller = new TesterController();
+                isRunnable = true;
+            }
+            catch (Exception e) {
+                MsgDialog.showError($"can not init config.\n {e}");
+            }
         }
 
         
         
-        private void SaveButton_Click(object sender, RoutedEventArgs e) {
-            bool isRun = true;
-           try
-            {
-                // 创建对应文件夹
-                dataInit();
-                createDir();
-                // 修改测试其配置文件
-                modifyConfig();
-                // todo 对测试的机型进行记录
-                // 启动程序
-                startSimulatorProgram(excuteProgram);
-            } catch(Exception ex)
-            {
-                isRun = false;
-            }
-            exitEAPProgram(isRun);
-        }
+        
         private void LoadSavedDevices()
         {
-            tester.ItemsSource = new List<string>();
+            //tester.ItemsSource = new List<string>();
         }
 
         private void getDeviceInfo(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
-            if (tester.SelectedItem != null)
-            {
-                string selectedDeviceInfo = tester.SelectedItem.ToString();
-                
+            // if (tester.SelectedItem != null)
+            // {
+            //     string selectedDeviceInfo = tester.SelectedItem.ToString();
+            //     
+            // }
+        }
+
+        #region 窗口事件
+        
+        private void SubmitButton_Click(object sender, RoutedEventArgs e) {
+            if (!isRunnable) {
+                MsgDialog.showWarn("can not run because not init config program");
+                return;
             }
+
+            if (checkInvalid()) {
+                MsgDialog.showWarn("存在参数值为空，不可执行");
+                return;
+            }
+            var vo = new DeviceVO() {
+                ip = txtIP.Text,
+                deviceNum = txtDeviceNum.Text,
+                deviceOwner = txtDeviceOwner.Text,
+                deviceId = txtDeviceId.Text,
+                port = txtPort.Text,
+                deviceCode = txtDeviceCode.Text
+            };
+            controller.startUpTester(vo);
+        }
+
+        /// <summary>
+        /// 窗口关闭
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void CloseButton(object sender, RoutedEventArgs e) {
+            Close();
         }
         /// <summary>
-        /// 启动程序
+        /// 监听窗口移动
         /// </summary>
-        private void startSimulatorProgram(string excuteProgram)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (string.IsNullOrEmpty(excuteProgram))
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
-                return;
+                this.DragMove();
             }
-            if (FileUtil.checkFile(excuteProgram))
-            {
-                Thread.Sleep(2000);
-                System.Diagnostics.Process.Start(excuteProgram);
-            }
-        }
-        private void exitEAPProgram(bool isSuccess)
-        {
-            if (isSuccess)
-            {
-                Thread.Sleep(2000);
-                Environment.Exit(1);
-            }
-        }
-        #region 业务处理
-
-        private void dataInit() {
-            
-            DeviceInfo info = InfoContext.currentInfo;
-            info.deviceOwner = deviceOwner.Text;
-            info.deviceCode = deviceCode.Text;
-            info.deviceId = deviceId.Text;
-            info.ip = ip.Text;
-            info.port = port.Text;
-        }
-
-        private void createDir() {
-            if (StringUtil.isEmpties(InfoContext.currentInfo.deviceOwner, InfoContext.currentInfo.deviceCode,
-                    InfoContext.currentInfo.ip)) {
-                throw new Exception("设备信息不能为空");
-            }
-
-            string path = Path.Combine(InfoContext.setting.baseDir, StringUtil.getDevice(InfoContext.currentInfo.deviceOwner),
-                InfoContext.currentInfo.deviceCode);
-            if (FileUtil.checkDir(path)) {
-                return;
-            }
-            // 创建设备目录
-            FileUtil.createDir(path);
-            /*InfoContext.logPath = Path.Combine(path, "log");*/
-            FileUtil.createDir(InfoContext.currentInfo.LogPath);// 创建日志目录
-
-        }
-
-        private void modifyConfig() {
-            // 找到tester配置文件
-            var tmp = InfoContext.virtualMachine.tester[0];
-            // 获取启动路径
-            excuteProgram = Path.Combine(tmp[Tester.dir], tmp[Tester.executeProgram]);
-            string configPath = Path.Combine(tmp[Tester.dir], tmp[Tester.configName]);
-            if (!FileUtil.checkFile(configPath)) {
-                throw new Exception("无法找到模拟器配置文件");
-            }
-
-            var conf = new XmlFile(configPath);
-            // 修改配置内容
-            var node = InfoContext.virtualMachine.testerDemo[tmp[Tester.name]];
-            if (node == null) {
-                throw new Exception("需要复制的模板为空，请检查");
-            }
-
-            var infos = InfoContext.currentInfo.getDeviceInfo();
-            string nodeName = StringUtil.getLabel(InfoContext.currentInfo);
-            conf.copyNode(XmlMatcher.Sece, node, nodeName,false, xmlNode => {
-                if (infos.ContainsKey(xmlNode.Name)) {
-                    return infos[xmlNode.Name];
-                }
-
-                return null;
-            });
-            conf.save();
         }
         #endregion
-        
+
+        private bool checkInvalid() {
+            bool result = string.IsNullOrEmpty(txtDeviceOwner.Text) || string.IsNullOrEmpty(txtPort.Text) || string.IsNullOrEmpty(txtDeviceNum.Text)
+                          || string.IsNullOrEmpty(txtDeviceId.Text)  || string.IsNullOrEmpty(txtIP.Text);
+            return result;
+        }
     }
 }

@@ -1,86 +1,89 @@
 ﻿<Window x:Class="TestClient.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TestClient"
-        mc:Ignorable="d"
-        Title="TestAssitant" Height="300" Width="400"
+        Title="设备信息输入" Height="300" Width="370"
         WindowStartupLocation="CenterScreen"
-        Background="#f0f0f0">
-    <Window.Resources>
-        <Style TargetType="Label">
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="5"/>
-        </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Padding" Value="0"/>
-        </Style>
-        <Style TargetType="Button">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="Background" Value="#0078d7"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderBrush" Value="#0078d7"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Width" Value="70"/>
-            <Setter Property="Height" Value="35"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="3">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
-    <Grid Margin="30,15,30,10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        Background="#F7F8FA" FontFamily="SimHei" FontSize="16"
+        WindowStyle="None" AllowsTransparency="True">
+    <Grid MouseDown="Grid_MouseDown">
+        <Border Background="LightGray" CornerRadius="8" Padding="5" Margin="4" Effect="{DynamicResource ShadowEffect}">
+            <StackPanel Margin="0,20,0,0">
+                <!-- 标题 -->
+                <TextBlock Text="设备信息输入" FontSize="18" FontWeight="Bold" Foreground="#2E3A59"
+                           HorizontalAlignment="Center" Margin="0,0,0,10" />
 
-        <Label Content="设备商名称:" Grid.Row="0" Grid.Column="0"/>
-        <TextBox x:Name="deviceOwner" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" />
+                <!-- 输入字段 -->
+                <UniformGrid Rows="5" Columns="1" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0,5,0">
+                        <TextBlock Text="设备商：" VerticalAlignment="Center" Margin="16,0,0,0" />
+                        <TextBox x:Name="txtDeviceOwner" Style="{StaticResource InputStyle}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0,5,0">
+                        <TextBlock Text="设备编号：" VerticalAlignment="Center" />
+                        <TextBox x:Name="txtDeviceCode" Style="{StaticResource InputStyle}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0,5,0">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="设备型号：" VerticalAlignment="Center"  />
+                            <TextBox x:Name="txtDeviceNum"  Width="129" Style="{StaticResource InputStyle}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text=" 设备ID:" VerticalAlignment="Center"  Margin="1,0,0,0" />
+                            <TextBox x:Name="txtDeviceId" Text="0" Width="43" TextAlignment="Center" Style="{StaticResource InputStyle}" />
+                        </StackPanel>
+                    </StackPanel>
 
-        <Label Content="设备型号:" Grid.Row="1" Grid.Column="0"/>
-        <TextBox x:Name="deviceCode" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" />
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0,5,0">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="IP地址：" VerticalAlignment="Center" Margin="16,0,0,0"/>
+                            <TextBox x:Name="txtIP" Width="130" Style="{StaticResource InputStyle}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text=" 端口号:" VerticalAlignment="Center"  Margin="1,0,0,0" />
+                            <TextBox x:Name="txtPort" Text="5000" Width="43" TextAlignment="Center" Style="{StaticResource InputStyle}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0,5,0">
+                        <TextBlock Text="测试设备：" VerticalAlignment="Center" TextAlignment="Left"  />
+                        <ComboBox x:Name="txtList" Style="{StaticResource CombStyle}"/>
+                    </StackPanel>
+                </UniformGrid>
 
-        <Label Content="设备ID:" Grid.Row="2" Grid.Column="0"/>
-        <TextBox x:Name="deviceId" Width="30" Grid.Row="2" Grid.Column="1" Text="0"/>
-
-        <Label Content="端口号:" Grid.Row="2" Grid.Column="2"/>
-        <TextBox x:Name="port" Grid.Row="2" Grid.Column="3" Text="5000"/>
-
-        <Label Content="设备IP地址:" Grid.Row="3" Grid.Column="0"/>
-        <TextBox x:Name="ip" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" />
-
-        <Label Content="测试设备:" Grid.Row="4" Grid.Column="0"/>
-        <ComboBox x:Name="tester" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" SelectionChanged="getDeviceInfo"/>
-
-        <Button Content="保存" Grid.Row="5" Grid.Column="3" Click="SaveButton_Click"/>
-        <Button Content="打开" Background="Brown" Grid.Row="5" Grid.Column="0" />
+                <!-- 按钮 -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,17,20,0">
+                    <Button Content="删除" Width="60" Height="30" Margin="5,0,5,0"
+                            Style="{StaticResource DeleteButtonStyle}"
+                            Click="SubmitButton_Click" />
+                    <Button Content="保存" Width="60" Height="30" Margin="5,0,5,0"
+                            Style="{StaticResource SubmitButtonStyle}"
+                            Click="SubmitButton_Click" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+        <!-- 自定义关闭按钮 -->
+        <Button Content="×" Width="30" Height="30" FontSize="16" Foreground="White" Background="#FF5C5C"
+                HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10" BorderBrush="Transparent"
+                Click="CloseButton"
+        >
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#FF5C5C" />
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#FF7878" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="15">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
     </Grid>
 </Window>

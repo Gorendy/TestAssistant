@@ -4,6 +4,87 @@
              xmlns:local="clr-namespace:TestClient"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!-- 输入框样式 -->
+        <Style x:Key="InputStyle" TargetType="TextBox">
+            <Setter Property="Margin" Value="5,3,0,5" />
+            <Setter Property="Padding" Value="3" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="BorderBrush" Value="LightSlateGray" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Width" Value="240" />
+        </Style>
+        <!-- 下拉框样式 -->
+        <Style x:Key="CombStyle" TargetType="ComboBox">
+            <Setter Property="Margin" Value="5,3,0,5" />
+            <Setter Property="Padding" Value="3" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="BorderBrush" Value="LightSlateGray" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Width" Value="240" />
+        </Style>
+        <!-- 提交按钮样式 -->
+        <Style x:Key="SubmitButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#4CAF50" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Padding" Value="5,2" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#4CAF50" ShadowDepth="1" BlurRadius="3" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#45A047" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- 提交按钮样式 -->
+        <Style x:Key="DeleteButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Red" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Padding" Value="5,2" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Red" ShadowDepth="1" BlurRadius="3" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Firebrick" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- 弹窗按钮样式 -->
+        <Style x:Key="DialogButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#4CAF50" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Padding" Value="5,2" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#4CAF50" ShadowDepth="1" BlurRadius="3" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#45A047" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- 阴影效果 -->
+        <DropShadowEffect x:Key="ShadowEffect" Color="Gray" BlurRadius="10" ShadowDepth="2" />
     </Application.Resources>
 </Application>

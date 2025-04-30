@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Remoting;
+using TesterHelper.constant;
+using TesterHelper.context;
 using TesterHelper.exception;
 using TesterHelper.util.logger;
 
@@ -30,7 +32,21 @@ namespace TesterHelper.util
             catch (Exception ex) {
                 throw new ServiceException(RCode.FILE_ERROR_CREATE, ex);
             }
+        }
 
+        public static void createFile(string file) {
+            if (checkFile(file)) {
+                return;
+            }
+            try {
+                if (!checkDir(SystemConstant.systemSaveInfoPath)) {
+                    Directory.CreateDirectory(SystemConstant.systemSaveInfoPath);
+                }
+                File.Create(file);
+            }
+            catch (Exception ex) {
+                throw new ServiceException(RCode.FILE_ERROR_CREATE, ex);
+            }
         }
         
         /// <summary>
@@ -88,6 +104,26 @@ namespace TesterHelper.util
                 throw new ServiceException(RCode.FILE_NOTFOUND);
             }
             return result;
+        }
+
+        public static void deleteDirectory(string path) {
+            if (File.Exists(path)) {
+                File.Delete(path);
+                return;
+            }
+
+            if (!Directory.Exists(path)) {
+                return;
+            }
+
+            foreach (var file in Directory.GetFiles(path)) {
+                File.Delete(file);
+            }
+
+            foreach (var dir in Directory.GetDirectories(path)) {
+                deleteDirectory(dir);
+            }
+            Directory.Delete(path);
         }
 
         /// <summary>

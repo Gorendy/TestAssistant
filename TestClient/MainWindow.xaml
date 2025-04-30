@@ -11,7 +11,7 @@
                 <!-- 标题 -->
                 <TextBlock Text="设备信息输入" FontSize="18" FontWeight="Bold" Foreground="#2E3A59"
                            HorizontalAlignment="Center" Margin="0,0,0,10" />
-
+                <TextBox x:Name="txtId" Visibility="Collapsed" />
                 <!-- 输入字段 -->
                 <UniformGrid Rows="5" Columns="1" VerticalAlignment="Top">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0,5,0">
@@ -45,16 +45,22 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0,5,0">
                         <TextBlock Text="测试设备：" VerticalAlignment="Center" TextAlignment="Left"  />
-                        <ComboBox x:Name="txtList" Style="{StaticResource CombStyle}"/>
+                        <ComboBox x:Name="txtList" Style="{StaticResource CombStyle}" SelectionChanged="getDeviceInfo" />
                     </StackPanel>
                 </UniformGrid>
 
                 <!-- 按钮 -->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,17,20,0">
-                    <Button Content="删除" Width="60" Height="30" Margin="5,0,5,0"
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,17,1,0">
+                    <Button Content="删除" Width="35" Height="20" Margin="5,0,100,0"
                             Style="{StaticResource DeleteButtonStyle}"
+                            Click="DeleteInfo" />
+                    <Button Content="完成" Width="60" Height="30" Margin="5,0,5,0"
+                            Style="{StaticResource CompleteButtonStyle}"
                             Click="SubmitButton_Click" />
                     <Button Content="保存" Width="60" Height="30" Margin="5,0,5,0"
+                            Style="{StaticResource SaveButtonStyle}"
+                            Click="SaveButton_Click" />
+                    <Button Content="打开" Width="60" Height="30" Margin="5,0,5,0"
                             Style="{StaticResource SubmitButtonStyle}"
                             Click="SubmitButton_Click" />
                 </StackPanel>

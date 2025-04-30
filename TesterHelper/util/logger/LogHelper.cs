@@ -225,6 +225,7 @@ namespace TesterHelper.util.logger
         void warn(RCode code, string format, params object[] pars);
         void error(RCode code, string message = null);
         void error(string message);
+        void error(string message, Exception e);
         void error(RCode code, string message, Exception e);
         void error(RCode code, string format, params object[] pars);
         int getErrorNum();

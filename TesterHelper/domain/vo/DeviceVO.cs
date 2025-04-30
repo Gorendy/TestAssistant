@@ -1,36 +1,10 @@
+using TesterHelper.domain.abstractclass;
 using TesterHelper.domain.dto;
 
 namespace TesterHelper.domain.vo
 {
-    public class DeviceVO
+    public class DeviceVO : AbstractDevice
     {
-        /// <summary>
-        /// 设备商
-        /// </summary>
-        public  string deviceOwner { get; set; }
-        /// <summary>
-        /// 设备型号
-        /// </summary>
-        public string deviceNum { get; set; }
-        /// <summary>
-        /// 设备编号
-        /// </summary>
-        public  string deviceCode { get; set; }
-        /// <summary>
-        /// 设备ip
-        /// </summary>
-        public  string ip { get; set; }
-
-        /// <summary>
-        /// 端口号
-        /// </summary>
-        public string port { get; set; } = "5000";
-
-        /// <summary>
-        /// 设备编号
-        /// </summary>
-        public string deviceId { get; set; } = "0";
-
         public DeviceDTO toDTO() {
             var dto = new DeviceDTO();
             dto.deviceOwner = deviceOwner;

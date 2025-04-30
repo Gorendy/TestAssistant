@@ -18,6 +18,7 @@ namespace TesterHelper.service
         public SystemService() {
             LogFactory.initLog();
             SystemContext.setConfiguration(systemInit());
+            retrieveTestingDeviceInfo();// 解析正在测试的设备
         }
         /// <summary>
         /// 程序初始化
@@ -30,6 +31,17 @@ namespace TesterHelper.service
             // 将配置文件反序列化
             var cfg = SerializeUtil.deserialization<Configuration>(SystemConstant.systemConfigFilePath);
             return cfg ?? throw new ServerException("文件反序列化失败，无法继续执行程序");
+        }
+
+        /// <summary>
+        /// 解析保存的正在测试的设备信息
+        /// </summary>
+        private void retrieveTestingDeviceInfo() {
+            // 判断配置文件是否存在
+            if (!File.Exists(SystemConstant.testingDeviceFile)) {
+                return;
+            }
+            SystemContext.deviceF = SerializeUtil.deserialization<DeviceF>(SystemConstant.testingDeviceFile);
         }
 
         public void runProcess(string processFile) {

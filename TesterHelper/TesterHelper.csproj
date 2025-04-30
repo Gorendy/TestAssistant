@@ -45,10 +45,12 @@
         <Compile Include="constant\SystemConstant.cs" />
         <Compile Include="context\SystemContext.cs" />
         <Compile Include="controller\TesterController.cs" />
+        <Compile Include="domain\abstractclass\AbstractDevice.cs" />
         <Compile Include="domain\config\Configuration.cs" />
         <Compile Include="domain\config\DeviceF.cs" />
         <Compile Include="domain\config\ICheckable.cs" />
         <Compile Include="domain\dto\DeviceDTO.cs" />
+        <Compile Include="domain\interf\INodeFormattable.cs" />
         <Compile Include="domain\po\Device.cs" />
         <Compile Include="domain\vo\DeviceVO.cs" />
         <Compile Include="exception\ServiceException.cs" />

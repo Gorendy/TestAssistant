@@ -7,7 +7,9 @@ namespace TesterHelper.domain.config
     [XmlRoot("List")]
     public class DeviceF
     {
-        [XmlArray("Device")]
+        [XmlElement("DeviceIndex")]
+        public int deviceIndex;
+        [XmlArray("Devices")]
         public List<Device> devices;
     }
 }

@@ -209,6 +209,13 @@ namespace TesterHelper.util.logger
             log.Error(format(message));
         }
 
+        public void error(string message, Exception e) {
+            if (!log.IsErrorEnabled) {
+                return;
+            }
+            log.Error(format(message), e);
+        }
+
         public abstract void error(RCode code, string message, Exception e);
         public abstract void error(RCode code, string format, params object[] pars);
 

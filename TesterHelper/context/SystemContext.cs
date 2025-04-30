@@ -17,7 +17,7 @@ namespace TesterHelper.context
         private static Lazy<SystemContext> lazy => new Lazy<SystemContext>(() => new SystemContext());
         public static SystemContext Current => lazy.Value;
 
-        public DeviceF deviceF { get; set; }
+        public static DeviceF deviceF { get; set; }
 
         #region param
 

@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
+using TesterHelper.exception;
 
 namespace TesterHelper.util
 {
@@ -27,7 +28,7 @@ namespace TesterHelper.util
             }
             catch (Exception e)
             {
-                return default;
+                throw new ServiceException("反序列化失败-", e);
             }
             return obj;
         }
@@ -57,9 +58,8 @@ namespace TesterHelper.util
                     }
                 }
             }
-            catch (Exception e)
-            {
-                return false;
+            catch (Exception e) {
+                throw new ServiceException("序列化失败-", e);
             }
 
             return true;
